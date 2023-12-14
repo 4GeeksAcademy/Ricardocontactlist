@@ -4,11 +4,17 @@ import { Link } from "react-router-dom";
 import { ContactCard } from "../component/ContactCard.js";
 import { Modal } from "../component/Modal";
 import { Context } from "../store/appContext.js";
+import { Editar } from "../component/Editar.jsx";
 
 export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false,
-		id:undefined,
+		id: undefined
+	});
+
+	const [edit, setEdit] = useState({
+		showModal: false,
+		id: undefined
 	});
 	const { store, actions } = useContext(Context);
 
@@ -33,13 +39,15 @@ export const Contacts = () => {
 								phone={items.phone}
 								address={items.address}
 								id={items.id}
-								onDelete={() => setState({ showModal: true,id:items.id })}
+								onDelete={() => setState({ showModal: true, id: items.id })}
+								onEdit={() => setEdit({ showModal: true, id: items.id })}
 							/>
 						))}
 					</ul>
 				</div>
 			</div>
 			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
+			<Editar show={edit.showModal} id={edit.id} onClose={() => setEdit({ showModal: false })} />
 		</div>
 	);
 };
